@@ -12,6 +12,8 @@ import math
 # To Pull:
 # Rpi Terminal: cd /home/pi/ME205_RobotControl
 #               git pull
+# To See Status: git status
+# To Add a new file: git add {path to file}
 
 gamepad_lock = threading.Lock()
 gamepad_Lx = 0.0
@@ -93,12 +95,12 @@ def yaw_actuation(joypos):
     if joypos > 10:
         GPIO.output(enable, on)
         GPIO.output(direc, CW)
-        delay = 0.001 + 0.01 * ((127.5 - joypos) / 127.5)
+        delay = 0.01 + 0.01 * ((127.5 - joypos) / 127.5)
         stepTracker = 1
     elif joypos < -10:
         GPIO.output(enable, on)
         GPIO.output(direc, CCW)
-        delay = 0.001 + 0.01 * ((127.5 + joypos) / 127.5)
+        delay = 0.01 + 0.01 * ((127.5 + joypos) / 127.5)
         stepTracker = -1
     else:
         delay = 0.1
@@ -189,10 +191,16 @@ def start():
         if gamepad_back:
             angleTracker = 0.0
 
-        if ly > 10:
-            chassisForward()
-        elif ly < -10:
-            chassisBackward()
+        if abs(ly) >= abs(lx)
+            if ly > 10:
+                chassisForward()
+            elif ly < -10:
+                chassisBackward()
+        else
+            if lx > 10:
+                chassisClockwise()
+            elif lx < -10:
+                chassisCounterclockwise()
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
 
