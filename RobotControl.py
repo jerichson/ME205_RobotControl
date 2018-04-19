@@ -191,12 +191,12 @@ def start():
         if gamepad_back:
             angleTracker = 0.0
 
-        if abs(ly) >= abs(lx)
+        if abs(ly) >= abs(lx):
             if ly > 10:
                 chassisForward()
             elif ly < -10:
                 chassisBackward()
-        else
+        else:
             if lx > 10:
                 chassisClockwise()
             elif lx < -10:
