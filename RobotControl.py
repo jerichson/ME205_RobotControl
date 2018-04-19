@@ -4,6 +4,15 @@ from inputs import get_gamepad
 import RPi.GPIO as GPIO
 import math
 
+# To Update:
+# Mac Terminal: cd ~/PycharmProjects/ME205_RC
+#               git add -u
+#               git commit -m "______"
+#               git push -u origin master
+# To Pull:
+# Rpi Terminal: cd /home/pi/ME205_RobotControl
+#               git pull
+
 gamepad_lock = threading.Lock()
 gamepad_Lx = 0.0
 gamepad_Ly = 0.0
