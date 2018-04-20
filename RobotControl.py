@@ -202,6 +202,8 @@ def start():
                 chassisForward()
             elif ly < -10:
                 chassisBackward()
+            else:
+                chassisStop()
         else:
             if lx > 10:
                 chassisClockwise()
