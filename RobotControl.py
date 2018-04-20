@@ -164,18 +164,8 @@ def chassisStop():
 
 
 def chassisMove(X, Y):
-    linear = 0.0
-    angular = 0.0
-
-    if Y > 10:
-        linear = 1.0 * ((127.5 - Y) / 127.5)
-    elif Y < -10:
-        linear = -1.0 * ((127.5 + Y) / 127.5)
-
-    if X > 10:
-        angular = 1.0 * ((127.5 - X) / 127.5)
-    elif X < -10:
-        angular = -1.0 * ((127.5 + X) / 127.5)
+    linear = 1.0 * (X / 127.5)
+    angular = 1.0 * (Y / 127.5)
 
     Lspeed = 11.4 + linear + angular
     Rspeed = 11.4 - linear + angular
