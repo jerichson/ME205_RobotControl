@@ -92,6 +92,7 @@ def get_gamepad_input():
 def yaw_actuation(joypos):
     GPIO.output(enable, off)
     stepTracker = 0
+    delay = 0.0
     if joypos > 10:
         GPIO.output(enable, on)
         GPIO.output(direc, CW)
