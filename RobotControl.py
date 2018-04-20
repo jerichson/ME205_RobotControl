@@ -157,6 +157,12 @@ def chassisCounterclockwise():
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
+def chassisStop():
+    Lspeed = 11.4
+    Rspeed = 11.4
+    Lmotor.ChangeDutyCycle(Lspeed)
+    Rmotor.ChangeDutyCycle(Rspeed)
+
 
 # def cimMove(joyX, joyY):
 
@@ -201,6 +207,9 @@ def start():
                 chassisClockwise()
             elif lx < -10:
                 chassisCounterclockwise()
+            else:
+                chassisStop()
+
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
 
