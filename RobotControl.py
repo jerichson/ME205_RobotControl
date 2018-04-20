@@ -57,19 +57,19 @@ def gamepad_loop():
         for event in events:
             if str(event.code) == "ABS_X":
                 gamepad_lock.acquire()
-                gamepad_Lx = (event.state - (255 / 2))
+                gamepad_Lx = (event.state - (255.0 / 2.0))
                 gamepad_lock.release()
             if str(event.code) == "ABS_Y":
                 gamepad_lock.acquire()
-                gamepad_Ly = -1 * (event.state - (255 / 2))
+                gamepad_Ly = -1 * (event.state - (255.0 / 2.0))
                 gamepad_lock.release()
             if str(event.code) == "ABS_Z":
                 gamepad_lock.acquire()
-                gamepad_Rx = (event.state - (255 / 2))
+                gamepad_Rx = (event.state - (255.0 / 2.0))
                 gamepad_lock.release()
             if str(event.code) == "ABS_RZ":
                 gamepad_lock.acquire()
-                gamepad_Ry = -1 * (event.state - (255 / 2))
+                gamepad_Ry = -1 * (event.state - (255.0 / 2.0))
                 gamepad_lock.release()
             if str(event.code) == "BTN_C":
                 gamepad_lock.acquire()
@@ -102,8 +102,6 @@ def yaw_actuation(joypos):
         GPIO.output(direc, CCW)
         delay = 0.01 + 0.01 * ((127.5 + joypos) / 127.5)
         stepTracker = -1
-    else:
-        delay = 0.1
 
     GPIO.output(step, GPIO.HIGH)
     time.sleep(delay)
@@ -164,7 +162,25 @@ def chassisStop():
     Rmotor.ChangeDutyCycle(Rspeed)
 
 
-# def cimMove(joyX, joyY):
+def chassisMove(X, Y):
+    linear = 0.0
+    angular = 0.0
+
+    if Y > 10:
+        linear = 1.0 * ((127.5 - Y) / 127.5)
+    elif Y < -10:
+        linear = -1.0 * ((127.5 + Y) / 127.5)
+
+    if X > 10:
+        angular = 1.0 * ((127.5 - X) / 127.5)
+    elif X < -10:
+        angular = -1.0 * ((127.5 + X) / 127.5)
+
+    Lspeed = 11.4 + linear + angular
+    Rspeed = 11.4 - linear + angular
+    Lmotor.ChangeDutyCycle(Lspeed)
+    Rmotor.ChangeDutyCycle(Rspeed)
+
 
 
 def cleanup(angle):
@@ -197,20 +213,10 @@ def start():
         if gamepad_back:
             angleTracker = 0.0
 
-        if abs(ly) >= abs(lx):
-            if ly > 10:
-                chassisForward()
-            elif ly < -10:
-                chassisBackward()
-            else:
-                chassisStop()
+        if abs(ly) > 10 or abs(lx) > 10:
+            chassisMove(lx, ly)
         else:
-            if lx > 10:
-                chassisClockwise()
-            elif lx < -10:
-                chassisCounterclockwise()
-            else:
-                chassisStop()
+            chassisStop()
 
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
