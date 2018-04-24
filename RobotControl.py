@@ -204,7 +204,6 @@ def chassisMove(X, Y):
 
 def cleanup(angle):
     global gamepad_run
-    gamepad_run = False
     print(angle * (1.8 / 2.4))
     goHome(angle)
     GPIO.cleanup()
