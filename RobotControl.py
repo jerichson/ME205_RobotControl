@@ -2,6 +2,7 @@ import threading
 import time
 from inputs import get_gamepad
 import RPi.GPIO as GPIO
+from subprocess import call
 import math
 
 # To Update:
@@ -26,8 +27,11 @@ gamepad_start = False
 gamepad_A = False
 gamepad_X = False
 gamepad_Y = False
-gamepad_Dx = False
-gamepad_Dy = False
+
+gamepad_Dx = 0.0
+
+gamepad_Rt = False
+gamepad_Lt = False
 gamepad_run = True
 
 on = 0
@@ -63,6 +67,8 @@ def gamepad_loop():
     global gamepad_Y
     global gamepad_Dx
     global gamepad_Dy
+    global gamepad_Rt
+    global gamepad_Lt
 
     while gamepad_run:
         events = get_gamepad()
@@ -106,6 +112,14 @@ def gamepad_loop():
             if str(event.code) == "BTN_NORTH":
                 gamepad_lock.acquire()
                 gamepad_Y = event.state
+                gamepad_lock.release()
+            if str(event.code) == "BTN_TR":
+                gamepad_lock.acquire()
+                gamepad_Rt = event.state
+                gamepad_lock.release()
+            if str(event.code) == "BTN_TL":
+                gamepad_lock.acquire()
+                gamepad_Lt = event.state
                 gamepad_lock.release()
 
 
@@ -205,8 +219,11 @@ def chassisMove(X, Y):
 def cleanup(angle):
     global gamepad_run
     print(angle * (1.8 / 2.4))
+    gamepad_run = False
     goHome(angle)
-    print("Done")
+    GPIO.cleanup()
+    print("Goodbye")
+    call("sudo shutdown -t now", shell=True)
 
 
 def start():
@@ -214,9 +231,10 @@ def start():
     Lmotor.start(11.4)
     Rmotor.start(11.4)
 
-    while True:
+    while not gamepad_Rt and not gamepad_Lt:
         angleTracker = 0.0
         if gamepad_start:
+            print("Start")
             while not gamepad_B:
                 (ly, lx, ry, rx) = get_gamepad_input()
                 # print("Left Joystick (Lx,Ly) is:\t(%s,%s)" % (lx, ly))
@@ -236,8 +254,12 @@ def start():
                     chassisMove(lx, ly)
                 else:
                     chassisStop()
+            print(angleTracker)
+            print("Done")
+        #elif gamepad_X:
+        #elif gamepad_Y:
 
-            cleanup(int(angleTracker / (1.8 / 2.4)))
+    cleanup(int(angleTracker / (1.8 / 2.4)))
 
 
 start()
