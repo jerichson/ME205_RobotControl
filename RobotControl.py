@@ -206,7 +206,6 @@ def cleanup(angle):
     global gamepad_run
     print(angle * (1.8 / 2.4))
     goHome(angle)
-    GPIO.cleanup()
     print("Done")
 
 
