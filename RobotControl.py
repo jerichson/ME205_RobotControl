@@ -22,6 +22,12 @@ gamepad_Rx = 0.0
 gamepad_Ry = 0.0
 gamepad_B = False
 gamepad_back = False
+gamepad_start = False
+gamepad_A = False
+gamepad_X = False
+gamepad_Y = False
+gamepad_Dx = False
+gamepad_Dy = False
 gamepad_run = True
 
 on = 0
@@ -51,6 +57,12 @@ def gamepad_loop():
     global gamepad_Ry
     global gamepad_B
     global gamepad_back
+    global gamepad_start
+    global gamepad_A
+    global gamepad_X
+    global gamepad_Y
+    global gamepad_Dx
+    global gamepad_Dy
 
     while gamepad_run:
         events = get_gamepad()
@@ -78,6 +90,22 @@ def gamepad_loop():
             if str(event.code) == "BTN_TL2":
                 gamepad_lock.acquire()
                 gamepad_back = event.state
+                gamepad_lock.release()
+            if str(event.code) == "BTN_TR2":
+                gamepad_lock.acquire()
+                gamepad_start = event.state
+                gamepad_lock.release()
+            if str(event.code) == "BTN_EAST":
+                gamepad_lock.acquire()
+                gamepad_A = event.state
+                gamepad_lock.release()
+            if str(event.code) == "BTN_SOUTH":
+                gamepad_lock.acquire()
+                gamepad_X = event.state
+                gamepad_lock.release()
+            if str(event.code) == "BTN_NORTH":
+                gamepad_lock.acquire()
+                gamepad_Y = event.state
                 gamepad_lock.release()
 
 
@@ -156,6 +184,7 @@ def chassisCounterclockwise():
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
+
 def chassisStop():
     Lspeed = 11.4
     Rspeed = 11.4
@@ -173,7 +202,6 @@ def chassisMove(X, Y):
     Rmotor.ChangeDutyCycle(Rspeed)
 
 
-
 def cleanup(angle):
     global gamepad_run
     gamepad_run = False
@@ -184,33 +212,34 @@ def cleanup(angle):
 
 
 def start():
-    angleTracker = 0.0
     threading.Thread(target=gamepad_loop).start()
     Lmotor.start(11.4)
     Rmotor.start(11.4)
 
-    while not gamepad_B:
-        (ly, lx, ry, rx) = get_gamepad_input()
-        # print("Left Joystick (Lx,Ly) is:\t(%s,%s)" % (lx, ly))
-        # print("Right Joystick (Rx, Ry) is:\t(%s,%s)" % (rx, ry))
+    while True:
+        angleTracker = 0.0
+        if gamepad_start:
+            while not gamepad_B:
+                (ly, lx, ry, rx) = get_gamepad_input()
+                # print("Left Joystick (Lx,Ly) is:\t(%s,%s)" % (lx, ly))
+                # print("Right Joystick (Rx, Ry) is:\t(%s,%s)" % (rx, ry))
 
-        motion = yaw_actuation(rx)
-        angleTracker += (1.8 / 2.4) * motion
-        if angleTracker > 360:
-            angleTracker -= 360
-        elif angleTracker < -360:
-            angleTracker += 360
+                motion = yaw_actuation(rx)
+                angleTracker += (1.8 / 2.4) * motion
+                if angleTracker > 360:
+                    angleTracker -= 360
+                elif angleTracker < -360:
+                    angleTracker += 360
 
-        if gamepad_back:
-            angleTracker = 0.0
+                if gamepad_back:
+                    angleTracker = 0.0
 
-        if abs(ly) > 10 or abs(lx) > 10:
-            chassisMove(lx, ly)
-        else:
-            chassisStop()
+                if abs(ly) > 10 or abs(lx) > 10:
+                    chassisMove(lx, ly)
+                else:
+                    chassisStop()
 
-
-    cleanup(int(angleTracker / (1.8 / 2.4)))
+            cleanup(int(angleTracker / (1.8 / 2.4)))
 
 
 start()
