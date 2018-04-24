@@ -1,11 +1,11 @@
-import threading
-import time
-from inputs import get_gamepad
-import RPi.GPIO as GPIO
-from subprocess import call
-import math
+# # # # # # # # # # # # # # # # # #
+# File: RobotControl.py
+# Author: Jake Erichson
+# UR ME205 Wheel Code
+# Last Revision: 4/24/18
+# # # # # # # # # # # # # # # # # #
 
-# To Update:
+# To Update Through GitHub:
 # Mac Terminal: cd ~/PycharmProjects/ME205_RC
 #               git add -u
 #               git commit -m "______"
@@ -16,6 +16,14 @@ import math
 # To See Status: git status
 # To Add a new file: git add {path to file}
 
+import threading
+import time
+from inputs import get_gamepad
+import RPi.GPIO as GPIO
+from subprocess import call
+import math
+
+# Initialize all the gamepad variables
 gamepad_lock = threading.Lock()
 gamepad_Lx = 0.0
 gamepad_Ly = 0.0
@@ -27,13 +35,12 @@ gamepad_start = False
 gamepad_A = False
 gamepad_X = False
 gamepad_Y = False
-
 gamepad_Dx = 0.0
-
 gamepad_Rt = False
 gamepad_Lt = False
 gamepad_run = True
 
+# Set pin numbers and settings for motors
 on = 0
 off = 1
 CW = 1
@@ -44,6 +51,7 @@ step = 24
 lCimPin = 12
 rCimPin = 18
 
+# Setup GPIO pins correctly
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(enable, GPIO.OUT)
 GPIO.setup(step, GPIO.OUT)
@@ -55,6 +63,7 @@ Rmotor = GPIO.PWM(rCimPin, 80)
 
 
 def gamepad_loop():
+    # to get all gamepad info in separate threads
     global gamepad_Lx
     global gamepad_Ly
     global gamepad_Rx
@@ -113,6 +122,10 @@ def gamepad_loop():
                 gamepad_lock.acquire()
                 gamepad_Y = event.state
                 gamepad_lock.release()
+            if str(event.code) == "HAT_OX":
+                gamepad_lock.acquire()
+                gamepad_Dx = event.state
+                gamepad_lock.release()
             if str(event.code) == "BTN_TR":
                 gamepad_lock.acquire()
                 gamepad_Rt = event.state
@@ -124,6 +137,7 @@ def gamepad_loop():
 
 
 def get_gamepad_input():
+    # to return certain gamepad inputs
     gamepad_lock.acquire()
     lx, ly = gamepad_Lx, gamepad_Ly
     rx, ry = gamepad_Rx, gamepad_Ry
@@ -132,6 +146,7 @@ def get_gamepad_input():
 
 
 def yaw_actuation(joypos):
+    # to move stepper at variable speeds in either direction
     GPIO.output(enable, off)
     stepTracker = 0
     delay = 0.0
@@ -154,6 +169,7 @@ def yaw_actuation(joypos):
 
 
 def goHome(steps):
+    # to move stepper back to zero position
     GPIO.output(enable, on)
     if steps >= 0:
         for i in range(0, steps):
@@ -172,6 +188,7 @@ def goHome(steps):
 
 
 def chassisForward():
+    # to go forward
     Lspeed = 11.4 + 1
     Rspeed = 11.4 - 1
     Lmotor.ChangeDutyCycle(Lspeed)
@@ -179,6 +196,7 @@ def chassisForward():
 
 
 def chassisBackward():
+    # to go backward
     Lspeed = 11.4 - 1
     Rspeed = 11.4 + 1
     Lmotor.ChangeDutyCycle(Lspeed)
@@ -186,6 +204,7 @@ def chassisBackward():
 
 
 def chassisClockwise():
+    # to spin clockwise
     Lspeed = 11.4 + 1
     Rspeed = 11.4 + 1
     Lmotor.ChangeDutyCycle(Lspeed)
@@ -193,6 +212,7 @@ def chassisClockwise():
 
 
 def chassisCounterclockwise():
+    # to spin counterclockwise
     Lspeed = 11.4 - 1
     Rspeed = 11.4 - 1
     Lmotor.ChangeDutyCycle(Lspeed)
@@ -200,6 +220,7 @@ def chassisCounterclockwise():
 
 
 def chassisStop():
+    # to stop both wheels
     Lspeed = 11.4
     Rspeed = 11.4
     Lmotor.ChangeDutyCycle(Lspeed)
@@ -207,6 +228,8 @@ def chassisStop():
 
 
 def chassisMove(X, Y):
+    # to move the chassis based on desired
+    #   linear and angular velocities
     linear = 1.0 * (Y / 127.5)
     angular = 1.0 * (X / 127.5)
 
@@ -217,6 +240,8 @@ def chassisMove(X, Y):
 
 
 def cleanup(angle):
+    # to reset GPIO pins, call goHome(), and
+    #   shutdown the raspberry pi safely
     global gamepad_run
     print(angle * (1.8 / 2.4))
     gamepad_run = False
@@ -227,37 +252,55 @@ def cleanup(angle):
 
 
 def start():
+    # main control function to run the Wheelchair
     threading.Thread(target=gamepad_loop).start()
     Lmotor.start(11.4)
     Rmotor.start(11.4)
 
+    # loops until shutoff by RT and LT, together
     while not gamepad_Rt and not gamepad_Lt:
         angleTracker = 0.0
+
+        # drive system engaged with Start
         if gamepad_start:
             print("Start")
+            # drive system cuts out with B
             while not gamepad_B:
                 (ly, lx, ry, rx) = get_gamepad_input()
                 # print("Left Joystick (Lx,Ly) is:\t(%s,%s)" % (lx, ly))
                 # print("Right Joystick (Rx, Ry) is:\t(%s,%s)" % (rx, ry))
 
+                # move the person (tolerance in function)
                 motion = yaw_actuation(rx)
+
+                # keep track of angle difference, chassis vs. person
                 angleTracker += (1.8 / 2.4) * motion
                 if angleTracker > 360:
                     angleTracker -= 360
                 elif angleTracker < -360:
                     angleTracker += 360
 
+                # zero the angle difference
                 if gamepad_back:
                     angleTracker = 0.0
 
+                # move the chassis if instructed
                 if abs(ly) > 10 or abs(lx) > 10:
                     chassisMove(lx, ly)
                 else:
                     chassisStop()
+
             print(angleTracker)
             print("Done")
+
+        # hardcoded box run with X
         #elif gamepad_X:
+
+        # hardcoded _____ run with Y
         #elif gamepad_Y:
+
+        # hardcoded rotation and yaw counter with x-axis D-pad
+        #elif abs(gamepad_Dx) > 25
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
 
