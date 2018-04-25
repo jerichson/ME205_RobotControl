@@ -307,8 +307,10 @@ def start():
 
         # hardcoded rotation and yaw counter with x-axis D-pad
         elif not gamepad_Dx == 0:
-            chassisMove(gamepad_Dx*127.5, 0)
-            yaw_actuation(-1*gamepad_Dx*127.5)
+            while not gamepad_Dx == 0:
+                chassisMove(gamepad_Dx*127.5, 0)
+                yaw_actuation(-1*gamepad_Dx*127.5)
+            chassisStop()
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
 
