@@ -305,7 +305,7 @@ def start():
 
         # hardcoded rotation and yaw counter with x-axis D-pad
         else:# abs(gamepad_Dx) > 25
-            print(dx)
+            print(gamepad_Dx)
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
 
