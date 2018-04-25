@@ -244,6 +244,15 @@ def chassisMove(X, Y):
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
+def robotSpin(direction):
+    # to spin chassis and counter-rotate top
+    # direction = (-1: CCW, 1: CW, 0: none)
+    yaw_actuation(-127.5*direction)
+    Lspeed = 11.4 + direction
+    Rspeed = 11.4 - direction
+    Lmotor.ChangeDutyCycle(Lspeed)
+    Rmotor.ChangeDutyCycle(Rspeed)
+
 
 def cleanup(angle):
     # to reset GPIO pins, call goHome(), and
@@ -308,8 +317,7 @@ def start():
         # hardcoded rotation and yaw counter with x-axis D-pad
         elif not gamepad_Dx == 0:
             while not gamepad_Dx == 0:
-                chassisMove(gamepad_Dx*127.5, 0)
-                yaw_actuation(-1*gamepad_Dx*127.5)
+                robotSpin(gamepad_Dx)
             chassisStop()
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
