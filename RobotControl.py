@@ -127,7 +127,7 @@ def gamepad_loop():
                 gamepad_lock.acquire()
                 gamepad_Y = event.state
                 gamepad_lock.release()
-            if str(event.code) == "HAT_0X":
+            if str(event.code) == "ABS_HAT0X":
                 gamepad_lock.acquire()
                 gamepad_Dx = event.state
                 gamepad_lock.release()
@@ -309,7 +309,6 @@ def start():
         else:# abs(gamepad_Dx) > 25
             (ly, lx, ry, rx, dx) = get_gamepad_input()
             print(dx)
-            print(rx)
             print("-")
             time.sleep(1)
 
