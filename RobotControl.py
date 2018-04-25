@@ -86,7 +86,7 @@ def gamepad_loop():
     while gamepad_run:
         events = get_gamepad()
         for event in events:
-            print(event.code)
+            #print(event.code)
             if str(event.code) == "ABS_X":
                 gamepad_lock.acquire()
                 gamepad_Lx = (event.state - (255.0 / 2.0))
@@ -127,7 +127,7 @@ def gamepad_loop():
                 gamepad_lock.acquire()
                 gamepad_Y = event.state
                 gamepad_lock.release()
-            if str(event.code) == "HAT_OX":
+            if str(event.code) == "HAT_0X":
                 gamepad_lock.acquire()
                 gamepad_Dx = event.state
                 gamepad_lock.release()
