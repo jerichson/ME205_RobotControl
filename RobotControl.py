@@ -24,7 +24,7 @@ import RPi.GPIO as GPIO
 from subprocess import call
 import math
 
-time.sleep(30)
+#time.sleep(30)
 
 # Initialize all the gamepad variables
 gamepad_lock = threading.Lock()
