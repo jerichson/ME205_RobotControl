@@ -306,9 +306,8 @@ def start():
         #elif gamepad_Y:
 
         # hardcoded rotation and yaw counter with x-axis D-pad
-        else:# abs(gamepad_Dx) > 25
-            (ly, lx, ry, rx, dx) = get_gamepad_input()
-            print(dx)
+        elif not gamepad_Dx == 0:
+            print(gamepad_Dx)
             print("-")
             time.sleep(1)
 
