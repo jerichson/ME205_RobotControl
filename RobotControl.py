@@ -314,7 +314,7 @@ def start():
         elif gamepad_X:
             #chassisForward()
             #time.sleep(1)
-            for i in range (0, 120):
+            for i in range (0, 100):
                 robotSpin(1)
             chassisStop()
 
