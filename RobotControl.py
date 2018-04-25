@@ -39,6 +39,7 @@ gamepad_A = False
 gamepad_X = False
 gamepad_Y = False
 gamepad_Dx = 0.0
+gamepad_Dy = 0.0
 gamepad_Rt = False
 gamepad_Lt = False
 gamepad_run = True
@@ -130,6 +131,10 @@ def gamepad_loop():
             if str(event.code) == "ABS_HAT0X":
                 gamepad_lock.acquire()
                 gamepad_Dx = event.state
+                gamepad_lock.release()
+            if str(event.code) == "ABS_HAT0Y":
+                gamepad_lock.acquire()
+                gamepad_Dy = event.state
                 gamepad_lock.release()
             if str(event.code) == "BTN_TR":
                 gamepad_lock.acquire()
@@ -350,7 +355,7 @@ def start():
             time.sleep(3)
             chassisStop()
             time.sleep(1)
-            for i in range(0, 480):
+            for i in range(0, 460):
                 robotSpin(1)
             chassisStop()
             time.sleep(1)
@@ -362,6 +367,14 @@ def start():
         elif not gamepad_Dx == 0:
             while not gamepad_Dx == 0:
                 robotSpin(gamepad_Dx)
+            chassisStop()
+
+        elif not gamepad_Dy == 0:
+            while not gamepad_Dy == 0:
+                if gamepad_Dy > 0:
+                    chassisForward()
+                elif gamepad_Dy < 0:
+                    chassisBackward()
             chassisStop()
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
