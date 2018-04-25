@@ -86,7 +86,7 @@ def gamepad_loop():
     while gamepad_run:
         events = get_gamepad()
         for event in events:
-            #print(event.code)
+            # print(event.code)
             if str(event.code) == "ABS_X":
                 gamepad_lock.acquire()
                 gamepad_Lx = (event.state - (255.0 / 2.0))
@@ -146,8 +146,9 @@ def get_gamepad_input():
     gamepad_lock.acquire()
     lx, ly = gamepad_Lx, gamepad_Ly
     rx, ry = gamepad_Rx, gamepad_Ry
+    dx = gamepad_Dx
     gamepad_lock.release()
-    return ly, lx, ry, rx
+    return ly, lx, ry, rx, dx
 
 
 def yaw_actuation(joypos):
@@ -271,7 +272,7 @@ def start():
             print("Start")
             # drive system cuts out with B
             while not gamepad_B:
-                (ly, lx, ry, rx) = get_gamepad_input()
+                (ly, lx, ry, rx, dx) = get_gamepad_input()
                 # print("Left Joystick (Lx,Ly) is:\t(%s,%s)" % (lx, ly))
                 # print("Right Joystick (Rx, Ry) is:\t(%s,%s)" % (rx, ry))
 
@@ -306,7 +307,7 @@ def start():
 
         # hardcoded rotation and yaw counter with x-axis D-pad
         else:# abs(gamepad_Dx) > 25
-            print(gamepad_Dx)
+            print(dx)
             time.sleep(1)
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
