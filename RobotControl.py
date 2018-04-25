@@ -309,6 +309,8 @@ def start():
         else:# abs(gamepad_Dx) > 25
             (ly, lx, ry, rx, dx) = get_gamepad_input()
             print(dx)
+            print(rx)
+            print("-")
             time.sleep(1)
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
