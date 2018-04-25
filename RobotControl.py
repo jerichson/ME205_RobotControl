@@ -86,6 +86,7 @@ def gamepad_loop():
     while gamepad_run:
         events = get_gamepad()
         for event in events:
+            print(event.code)
             if str(event.code) == "ABS_X":
                 gamepad_lock.acquire()
                 gamepad_Lx = (event.state - (255.0 / 2.0))
@@ -306,6 +307,7 @@ def start():
         # hardcoded rotation and yaw counter with x-axis D-pad
         else:# abs(gamepad_Dx) > 25
             print(gamepad_Dx)
+            time.sleep(1)
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
 
