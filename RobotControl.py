@@ -55,6 +55,7 @@ lCimPin = 12
 rCimPin = 18
 
 # Setup GPIO pins correctly
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(enable, GPIO.OUT)
 GPIO.setup(step, GPIO.OUT)
@@ -156,12 +157,12 @@ def yaw_actuation(joypos):
     if joypos > 10:
         GPIO.output(enable, on)
         GPIO.output(direc, CW)
-        delay = 0.0075 + 0.0075 * ((127.5 - joypos) / 127.5)
+        delay = 0.006 + 0.0075 * ((127.5 - joypos) / 127.5)
         stepTracker = 1
     elif joypos < -10:
         GPIO.output(enable, on)
         GPIO.output(direc, CCW)
-        delay = 0.0075 + 0.0075 * ((127.5 + joypos) / 127.5)
+        delay = 0.006 + 0.0075 * ((127.5 + joypos) / 127.5)
         stepTracker = -1
 
     GPIO.output(step, GPIO.HIGH)
