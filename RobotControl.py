@@ -314,18 +314,32 @@ def start():
         elif gamepad_X:
             chassisForward()
             time.sleep(3)
+            chassisStop()
+            time.sleep(1)
             for i in range (0, 120):
                 robotSpin(0.75)
+            chassisStop()
+            time.sleep(1)
             chassisForward()
             time.sleep(3)
+            chassisStop()
+            time.sleep(1)
             for i in range (0, 120):
                 robotSpin(-0.75)
+            chassisStop()
+            time.sleep(1)
             chassisBackward()
             time.sleep(3)
+            chassisStop()
+            time.sleep(1)
             for i in range (0, 120):
                 robotSpin(-0.75)
+            chassisStop()
+            time.sleep(1)
             chassisForward()
             time.sleep(3)
+            chassisStop()
+            time.sleep(1)
             for i in range (0, 120):
                 robotSpin(0.75)
             chassisStop()
