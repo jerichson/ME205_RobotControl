@@ -62,6 +62,7 @@ GPIO.setup(step, GPIO.OUT)
 GPIO.setup(direc, GPIO.OUT)
 GPIO.setup(lCimPin, GPIO.OUT)
 GPIO.setup(rCimPin, GPIO.OUT)
+GPIO.output(enable, off)
 Lmotor = GPIO.PWM(lCimPin, 80)
 Rmotor = GPIO.PWM(rCimPin, 80)
 
@@ -153,7 +154,6 @@ def get_gamepad_input():
 
 def yaw_actuation(joypos):
     # to move stepper at variable speeds in either direction
-    GPIO.output(enable, off)
     stepTracker = 0
     delay = 0.0
     if joypos > 10:
@@ -171,6 +171,7 @@ def yaw_actuation(joypos):
     time.sleep(delay)
     GPIO.output(step, GPIO.LOW)
     time.sleep(delay)
+    GPIO.output(enable, off)
     return stepTracker
 
 
