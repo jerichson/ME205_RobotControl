@@ -245,8 +245,8 @@ def chassisMove(X, Y):
     linear = 1.0 * (Y / 127.5)
     angular = 1.0 * (X / 127.5)
 
-    Lspeed = 11.4 + 3*linear + angular
-    Rspeed = 11.4 - 3*linear + angular
+    Lspeed = 11.4 + 5*linear + angular
+    Rspeed = 11.4 - 5*linear + angular
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
