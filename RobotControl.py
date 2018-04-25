@@ -304,7 +304,8 @@ def start():
         #elif gamepad_Y:
 
         # hardcoded rotation and yaw counter with x-axis D-pad
-        #elif abs(gamepad_Dx) > 25
+        else:# abs(gamepad_Dx) > 25
+            print(dx)
 
     cleanup(int(angleTracker / (1.8 / 2.4)))
 
