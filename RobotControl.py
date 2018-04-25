@@ -344,8 +344,19 @@ def start():
                 robotSpin(0.75)
             chassisStop()
 
-        # hardcoded _____ run with Y
-        #elif gamepad_Y:
+        # hardcoded line run with Y
+        elif gamepad_Y:
+            chassisForward()
+            time.sleep(3)
+            chassisStop()
+            time.sleep(1)
+            for i in range(0, 480):
+                robotSpin(0.75)
+            chassisStop()
+            time.sleep(1)
+            chassisBackward()
+            time.sleep(3)
+            chassisStop()
 
         # hardcoded rotation and yaw counter with x-axis D-pad
         elif not gamepad_Dx == 0:
