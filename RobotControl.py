@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # # # # # # # # # # # # # # # # # #
 # File: RobotControl.py
 # Author: Jake Erichson
@@ -22,6 +23,8 @@ from inputs import get_gamepad
 import RPi.GPIO as GPIO
 from subprocess import call
 import math
+
+time.sleep(30)
 
 # Initialize all the gamepad variables
 gamepad_lock = threading.Lock()
