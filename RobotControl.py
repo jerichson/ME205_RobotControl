@@ -245,8 +245,9 @@ def chassisMove(X, Y):
     linear = 1.0 * (Y / 127.5)
     angular = 1.0 * (X / 127.5)
 
-    Lspeed = 11.4 + 5*linear + angular
-    Rspeed = 11.4 - 5*linear + angular
+    maxSpeed = 7.0 # 0.1 to 7.1
+    Lspeed = 11.4 + maxSpeed*linear + maxSpeed*angular
+    Rspeed = 11.4 - maxSpeed*linear + maxSpeed*angular
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
@@ -371,9 +372,9 @@ def start():
 
         elif not gamepad_Dy == 0:
             while not gamepad_Dy == 0:
-                if gamepad_Dy > 0:
+                if gamepad_Dy < 0:
                     chassisForward()
-                elif gamepad_Dy < 0:
+                elif gamepad_Dy > 0:
                     chassisBackward()
             chassisStop()
 
