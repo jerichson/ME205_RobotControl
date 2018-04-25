@@ -153,12 +153,12 @@ def yaw_actuation(joypos):
     if joypos > 10:
         GPIO.output(enable, on)
         GPIO.output(direc, CW)
-        delay = 0.01 + 0.005 * ((127.5 - joypos) / 127.5)
+        delay = 0.005 + 0.005 * ((127.5 - joypos) / 127.5)
         stepTracker = 1
     elif joypos < -10:
         GPIO.output(enable, on)
         GPIO.output(direc, CCW)
-        delay = 0.01 + 0.005 * ((127.5 + joypos) / 127.5)
+        delay = 0.005 + 0.005 * ((127.5 + joypos) / 127.5)
         stepTracker = -1
 
     GPIO.output(step, GPIO.HIGH)
