@@ -314,20 +314,20 @@ def start():
         elif gamepad_X:
             chassisForward()
             time.sleep(3)
-            for i in range (0, 115):
-                robotSpin(0.5)
+            for i in range (0, 120):
+                robotSpin(0.75)
             chassisForward()
             time.sleep(3)
-            for i in range (0, 115):
-                robotSpin(-0.5)
+            for i in range (0, 120):
+                robotSpin(-0.75)
             chassisBackward()
             time.sleep(3)
-            for i in range (0, 115):
-                robotSpin(-0.5)
+            for i in range (0, 120):
+                robotSpin(-0.75)
             chassisForward()
             time.sleep(3)
-            for i in range (0, 115):
-                robotSpin(0.5)
+            for i in range (0, 120):
+                robotSpin(0.75)
             chassisStop()
 
         # hardcoded _____ run with Y
