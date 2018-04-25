@@ -251,7 +251,7 @@ def robotSpin(direction):
     # direction = (-1: CCW, 1: CW, 0: none)
     yaw_actuation(-127.5*direction)
     Lspeed = 11.4 + direction
-    Rspeed = 11.4 - direction
+    Rspeed = 11.4 + direction
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
