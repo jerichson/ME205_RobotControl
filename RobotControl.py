@@ -312,11 +312,23 @@ def start():
 
         # hardcoded box run with X
         elif gamepad_X:
-            #chassisForward()
-            #time.sleep(1)
-            for i in range (0, 100):
+            chassisForward()
+            time.sleep(1)
+            for i in range (0, 105):
                 robotSpin(1)
             chassisStop()
+            chassisForward()
+            time.sleep(1)
+            for i in range (0, 105):
+                robotSpin(-1)
+            chassisBackward()
+            time.sleep(1)
+            for i in range (0, 105):
+                robotSpin(-1)
+            chassisForward()
+            time.sleep(1)
+            for i in range (0, 105):
+                robotSpin(1)
 
         # hardcoded _____ run with Y
         #elif gamepad_Y:
