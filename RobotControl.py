@@ -381,4 +381,5 @@ def start():
     cleanup(int(angleTracker / (1.8 / 2.4)))
 
 
-start()
+if __name__ == '__main__':
+    start()
