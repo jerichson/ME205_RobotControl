@@ -13,7 +13,9 @@
 #               git push -u origin master
 # To Pull:
 # Rpi Terminal: cd /home/pi/ME205_RobotControl
+#               git reset --hard
 #               git pull
+#               chmod 755 RobotControl.py
 # To See Status: git status
 # To Add a new file: git add {path to file}
 
@@ -22,9 +24,8 @@ import time
 from inputs import get_gamepad
 import RPi.GPIO as GPIO
 from subprocess import call
-import math
 
-#time.sleep(30)
+time.sleep(30)
 
 # Initialize all the gamepad variables
 gamepad_lock = threading.Lock()
@@ -284,7 +285,7 @@ def start():
         angleTracker = 0.0
 
         # drive system engaged with Start
-        if gamepad_start:
+        if gamepad_A:
             print("Start")
             # drive system cuts out with B
             while not gamepad_B:
