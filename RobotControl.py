@@ -278,8 +278,12 @@ def start():
             GPIO.setup(direc, GPIO.OUT)
             GPIO.setup(lCimPin, GPIO.OUT)
             GPIO.setup(rCimPin, GPIO.OUT)
-            global Lmotor = GPIO.PWM(lCimPin, 80)
-            global Rmotor = GPIO.PWM(rCimPin, 80)
+
+            global Lmotor
+            global Rmotor
+
+            Lmotor = GPIO.PWM(lCimPin, 80)
+            Rmotor = GPIO.PWM(rCimPin, 80)
 
             Lmotor.start(11.4)
             Rmotor.start(11.4)
