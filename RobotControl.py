@@ -26,19 +26,6 @@ import math
 
 #time.sleep(30)
 
-# Setup GPIO pins correctly
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(enable, GPIO.OUT)
-GPIO.setup(step, GPIO.OUT)
-GPIO.setup(direc, GPIO.OUT)
-GPIO.setup(lCimPin, GPIO.OUT)
-GPIO.setup(rCimPin, GPIO.OUT)
-Lmotor = GPIO.PWM(lCimPin, 80)
-Rmotor = GPIO.PWM(rCimPin, 80)
-Lmotor.start(11.4)
-Rmotor.start(11.4)
-
 # Initialize all the gamepad variables
 gamepad_lock = threading.Lock()
 gamepad_Lx = 0.0
@@ -68,6 +55,18 @@ step = 24
 lCimPin = 12
 rCimPin = 18
 
+# Setup GPIO pins correctly
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(enable, GPIO.OUT)
+GPIO.setup(step, GPIO.OUT)
+GPIO.setup(direc, GPIO.OUT)
+GPIO.setup(lCimPin, GPIO.OUT)
+GPIO.setup(rCimPin, GPIO.OUT)
+Lmotor = GPIO.PWM(lCimPin, 80)
+Rmotor = GPIO.PWM(rCimPin, 80)
+Lmotor.start(11.4)
+Rmotor.start(11.4)
 
 def gamepad_loop():
     # to get all gamepad info in separate threads
