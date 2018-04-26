@@ -26,6 +26,19 @@ import math
 
 #time.sleep(30)
 
+# Setup GPIO pins correctly
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(enable, GPIO.OUT)
+GPIO.setup(step, GPIO.OUT)
+GPIO.setup(direc, GPIO.OUT)
+GPIO.setup(lCimPin, GPIO.OUT)
+GPIO.setup(rCimPin, GPIO.OUT)
+Lmotor = GPIO.PWM(lCimPin, 80)
+Rmotor = GPIO.PWM(rCimPin, 80)
+Lmotor.start(11.4)
+Rmotor.start(11.4)
+
 # Initialize all the gamepad variables
 gamepad_lock = threading.Lock()
 gamepad_Lx = 0.0
@@ -269,25 +282,6 @@ def start():
 
     # loops until shutoff by RT and LT, together
     while not gamepad_Rt and not gamepad_Lt:
-        if gamepad_start:
-            # Setup GPIO pins correctly
-            GPIO.setwarnings(False)
-            GPIO.setmode(GPIO.BCM)
-            GPIO.setup(enable, GPIO.OUT)
-            GPIO.setup(step, GPIO.OUT)
-            GPIO.setup(direc, GPIO.OUT)
-            GPIO.setup(lCimPin, GPIO.OUT)
-            GPIO.setup(rCimPin, GPIO.OUT)
-
-            global Lmotor
-            global Rmotor
-
-            Lmotor = GPIO.PWM(lCimPin, 80)
-            Rmotor = GPIO.PWM(rCimPin, 80)
-
-            Lmotor.start(11.4)
-            Rmotor.start(11.4)
-
         angleTracker = 0.0
 
         # drive system engaged with Start
