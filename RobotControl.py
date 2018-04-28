@@ -25,6 +25,7 @@ from inputs import get_gamepad
 import RPi.GPIO as GPIO
 from subprocess import call
 
+# Delay start up to avoid "ghost" motion
 time.sleep(30)
 
 # Initialize all the gamepad variables
@@ -153,9 +154,8 @@ def get_gamepad_input():
     gamepad_lock.acquire()
     lx, ly = gamepad_Lx, gamepad_Ly
     rx, ry = gamepad_Rx, gamepad_Ry
-    dx = gamepad_Dx
     gamepad_lock.release()
-    return ly, lx, ry, rx, dx
+    return ly, lx, ry, rx
 
 
 def yaw_actuation(joypos):
@@ -203,8 +203,8 @@ def goHome(steps):
 
 def chassisForward():
     # to go forward
-    Lspeed = 11.4 + 4
-    Rspeed = 11.4 - 4
+    Lspeed = 11.4 + 1
+    Rspeed = 11.4 - 1
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
@@ -289,7 +289,7 @@ def start():
             print("Start")
             # drive system cuts out with B
             while not gamepad_B:
-                (ly, lx, ry, rx, dx) = get_gamepad_input()
+                (ly, lx, ry, rx) = get_gamepad_input()
                 # print("Left Joystick (Lx,Ly) is:\t(%s,%s)" % (lx, ly))
                 # print("Right Joystick (Rx, Ry) is:\t(%s,%s)" % (rx, ry))
 
