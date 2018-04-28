@@ -203,8 +203,8 @@ def goHome(steps):
 
 def chassisForward():
     # to go forward
-    Lspeed = 11.4 + 1
-    Rspeed = 11.4 - 1
+    Lspeed = 11.4 + 4
+    Rspeed = 11.4 - 4
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
