@@ -3,7 +3,7 @@
 # File: RobotControl.py
 # Author: Jake Erichson
 # UR ME205 Wheel Code
-# Last Revision: 4/24/18
+# Last Revision: 4/29/18
 # # # # # # # # # # # # # # # # # #
 
 # To Update Through GitHub:
@@ -69,6 +69,7 @@ Lmotor = GPIO.PWM(lCimPin, 80)
 Rmotor = GPIO.PWM(rCimPin, 80)
 Lmotor.start(11.4)
 Rmotor.start(11.4)
+
 
 def gamepad_loop():
     # to get all gamepad info in separate threads
@@ -244,10 +245,10 @@ def chassisStop():
 def chassisMove(X, Y):
     # to move the chassis based on desired
     #   linear and angular velocities
-    linear = 1.0 * (Y / 127.5)
-    angular = 1.0 * (X / 127.5)
+    linear = (Y / 127.5)
+    angular = (X / 127.5)
 
-    maxSpeed = 1.0 # 0.1 to 7.1
+    maxSpeed = 0.5  # 0.1 to 7.1
     Lspeed = 11.4 + maxSpeed*linear + maxSpeed*angular
     Rspeed = 11.4 - maxSpeed*linear + maxSpeed*angular
     Lmotor.ChangeDutyCycle(Lspeed)
@@ -284,7 +285,7 @@ def start():
     while not gamepad_Rt and not gamepad_Lt:
         angleTracker = 0.0
 
-        # drive system engaged with Start
+        # drive system engaged with A
         if gamepad_A:
             print("Start")
             # drive system cuts out with B
@@ -356,7 +357,7 @@ def start():
             time.sleep(3)
             chassisStop()
             time.sleep(1)
-            for i in range(0, 460):
+            for i in range(0, 480):
                 robotSpin(1)
             chassisStop()
             time.sleep(1)
@@ -370,6 +371,7 @@ def start():
                 robotSpin(gamepad_Dx)
             chassisStop()
 
+        # hardcoded forward and backward motion with D-pad
         elif not gamepad_Dy == 0:
             while not gamepad_Dy == 0:
                 if gamepad_Dy < 0:
