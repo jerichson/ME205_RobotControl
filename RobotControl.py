@@ -167,7 +167,6 @@ def yaw_actuation(joypos):
     if joypos > 10:
         GPIO.output(enable, on)
         GPIO.output(direc, CW)
-        # .006 + .0075 for 1
         delay = 0.00375 + 0.005 * ((127.5 - joypos) / 127.5)
         stepTracker = 1
     elif joypos < -10:
@@ -205,32 +204,32 @@ def goHome(steps):
 
 def chassisForward():
     # to go forward
-    Lspeed = 11.4 + 1
-    Rspeed = 11.4 - 1
+    Lspeed = 11.4 + 1.5
+    Rspeed = 11.4 - 1.5
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
 
 def chassisBackward():
     # to go backward
-    Lspeed = 11.4 - 1
-    Rspeed = 11.4 + 1
+    Lspeed = 11.4 - 1.5
+    Rspeed = 11.4 + 1.5
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
 
 def chassisClockwise():
     # to spin clockwise
-    Lspeed = 11.4 + 1
-    Rspeed = 11.4 + 1
+    Lspeed = 11.4 + 1.5
+    Rspeed = 11.4 + 1.5
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
 
 def chassisCounterclockwise():
     # to spin counterclockwise
-    Lspeed = 11.4 - 1
-    Rspeed = 11.4 - 1
+    Lspeed = 11.4 - 1.5
+    Rspeed = 11.4 - 1.5
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
@@ -249,7 +248,7 @@ def chassisMove(X, Y):
     linear = (Y / 127.5)
     angular = (X / 127.5)
 
-    maxSpeed = 1.0  # 0.1 to 7.1
+    maxSpeed = 1.5  # 0.1 to 7.1
     Lspeed = 11.4 + maxSpeed*linear + maxSpeed*angular
     Rspeed = 11.4 - maxSpeed*linear + maxSpeed*angular
     Lmotor.ChangeDutyCycle(Lspeed)
