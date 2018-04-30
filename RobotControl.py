@@ -167,12 +167,13 @@ def yaw_actuation(joypos):
     if joypos > 10:
         GPIO.output(enable, on)
         GPIO.output(direc, CW)
-        delay = 0.006 + 0.0075 * ((127.5 - joypos) / 127.5)
+        # .006 + .0075 for 1
+        delay = 0.004 + 0.005 * ((127.5 - joypos) / 127.5)
         stepTracker = 1
     elif joypos < -10:
         GPIO.output(enable, on)
         GPIO.output(direc, CCW)
-        delay = 0.006 + 0.0075 * ((127.5 + joypos) / 127.5)
+        delay = 0.004 + 0.005 * ((127.5 + joypos) / 127.5)
         stepTracker = -1
 
     GPIO.output(step, GPIO.HIGH)
@@ -248,7 +249,7 @@ def chassisMove(X, Y):
     linear = (Y / 127.5)
     angular = (X / 127.5)
 
-    maxSpeed = 5.0  # 0.1 to 7.1
+    maxSpeed = 1.0  # 0.1 to 7.1
     Lspeed = 11.4 + maxSpeed*linear + maxSpeed*angular
     Rspeed = 11.4 - maxSpeed*linear + maxSpeed*angular
     Lmotor.ChangeDutyCycle(Lspeed)
@@ -259,8 +260,8 @@ def robotSpin(direction):
     # to spin chassis and counter-rotate top
     # direction = (-1: CCW, 1: CW, 0: none)
     yaw_actuation(-127.5*direction)
-    Lspeed = 11.4 + direction
-    Rspeed = 11.4 + direction
+    Lspeed = 11.4 + 1.5*direction
+    Rspeed = 11.4 + 1.5*direction
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
