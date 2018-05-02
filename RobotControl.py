@@ -340,7 +340,7 @@ def start():
             time.sleep(1.5)
             chassisStop()
             time.sleep(1)
-            for i in range (0, 100):
+            for i in range (0, 95):
                 robotSpin(-1)
             chassisStop()
             time.sleep(1)
@@ -348,7 +348,7 @@ def start():
             time.sleep(3)
             chassisStop()
             time.sleep(1)
-            for i in range (0, 100):
+            for i in range (0, 95):
                 robotSpin(-1)
             chassisStop()
             time.sleep(1)
