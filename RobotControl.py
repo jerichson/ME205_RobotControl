@@ -332,15 +332,15 @@ def start():
             time.sleep(3)
             chassisStop()
             time.sleep(1)
-            for i in range (0, 120):
+            for i in range (0, 100):
                 robotSpin(0.75)
             chassisStop()
             time.sleep(1)
             chassisForward()
-            time.sleep(3)
+            time.sleep(1.5)
             chassisStop()
             time.sleep(1)
-            for i in range (0, 120):
+            for i in range (0, 100):
                 robotSpin(-0.75)
             chassisStop()
             time.sleep(1)
@@ -348,15 +348,15 @@ def start():
             time.sleep(3)
             chassisStop()
             time.sleep(1)
-            for i in range (0, 120):
+            for i in range (0, 100):
                 robotSpin(-0.75)
             chassisStop()
             time.sleep(1)
             chassisForward()
-            time.sleep(3)
+            time.sleep(1.5)
             chassisStop()
             time.sleep(1)
-            for i in range (0, 120):
+            for i in range (0, 100):
                 robotSpin(0.75)
             chassisStop()
 
