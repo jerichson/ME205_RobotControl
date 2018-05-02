@@ -333,7 +333,7 @@ def start():
             chassisStop()
             time.sleep(1)
             for i in range (0, 100):
-                robotSpin(0.75)
+                robotSpin(1)
             chassisStop()
             time.sleep(1)
             chassisForward()
@@ -341,7 +341,7 @@ def start():
             chassisStop()
             time.sleep(1)
             for i in range (0, 100):
-                robotSpin(-0.75)
+                robotSpin(-1)
             chassisStop()
             time.sleep(1)
             chassisBackward()
@@ -349,7 +349,7 @@ def start():
             chassisStop()
             time.sleep(1)
             for i in range (0, 100):
-                robotSpin(-0.75)
+                robotSpin(-1)
             chassisStop()
             time.sleep(1)
             chassisForward()
@@ -357,13 +357,13 @@ def start():
             chassisStop()
             time.sleep(1)
             for i in range (0, 100):
-                robotSpin(0.75)
+                robotSpin(1)
             chassisStop()
 
         # hardcoded line run with Y
         elif gamepad_Y:
             chassisForward()
-            time.sleep(2)
+            time.sleep(4)
             chassisStop()
             time.sleep(1)
             for i in range(0, 430):
@@ -371,7 +371,7 @@ def start():
             chassisStop()
             time.sleep(1)
             chassisBackward()
-            time.sleep(2)
+            time.sleep(4)
             chassisStop()
 
         # hardcoded rotation and yaw counter with x-axis D-pad
