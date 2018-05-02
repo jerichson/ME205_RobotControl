@@ -213,32 +213,32 @@ def chassisForward():
 
 def chassisBackward():
     # to go backward
-    Lspeed = 11.4 - 1.5
-    Rspeed = 11.4 + 1.5
+    Lspeed = 11.45 - 1.5
+    Rspeed = 11.45 + 1.5
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
 
 def chassisClockwise():
     # to spin clockwise
-    Lspeed = 11.4 + 1.5
-    Rspeed = 11.4 + 1.5
+    Lspeed = 11.45 + 1.5
+    Rspeed = 11.45 + 1.5
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
 
 def chassisCounterclockwise():
     # to spin counterclockwise
-    Lspeed = 11.4 - 1.5
-    Rspeed = 11.4 - 1.5
+    Lspeed = 11.45 - 1.5
+    Rspeed = 11.45 - 1.5
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
 
 def chassisStop():
     # to stop both wheels
-    Lspeed = 11.4
-    Rspeed = 11.4
+    Lspeed = 11.45
+    Rspeed = 11.45
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
@@ -250,8 +250,8 @@ def chassisMove(X, Y):
     angular = (X / 127.5)
 
     maxSpeed = 1.5  # 0.1 to 7.1
-    Lspeed = 11.4 + maxSpeed*linear + maxSpeed*angular
-    Rspeed = 11.4 - maxSpeed*linear + maxSpeed*angular
+    Lspeed = 11.45 + maxSpeed*linear + maxSpeed*angular
+    Rspeed = 11.45 - maxSpeed*linear + maxSpeed*angular
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
@@ -266,8 +266,8 @@ def robotSpin(direction):
     # to spin chassis and counter-rotate top
     # direction = (-1: CCW, 1: CW, 0: none)
     yaw_actuation(-127.5*direction)
-    Lspeed = 11.4 + 1.5*direction
-    Rspeed = 11.4 + 1.5*direction
+    Lspeed = 11.45 + 1.5*direction
+    Rspeed = 11.45 + 1.5*direction
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
@@ -366,7 +366,7 @@ def start():
             time.sleep(2)
             chassisStop()
             time.sleep(1)
-            for i in range(0, 450):
+            for i in range(0, 445):
                 robotSpin(1)
             chassisStop()
             time.sleep(1)
