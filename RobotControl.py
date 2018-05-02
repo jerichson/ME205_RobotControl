@@ -257,7 +257,7 @@ def chassisMove(X, Y):
     Lvel = 1.0639*(Lspeed-11.4) - 0.2668
     Rvel = 1.0639*(Rspeed-11.4) - 0.2668
 
-    return Lvel, Rvel
+    #return Lvel, Rvel
 
 
 def robotSpin(direction):
@@ -315,14 +315,15 @@ def start():
 
                 # move the chassis if instructed
                 if abs(ly) > 10 or abs(lx) > 10:
-                    left_velocity, right_velocity = chassisMove(lx, ly)
+                    #left_velocity, right_velocity = chassisMove(lx, ly)
+                    chassisMove(lx, ly)
                 else:
                     chassisStop()
-                    right_velocity = 0.0
-                    left_velocity = 0.0
+                    #right_velocity = 0.0
+                    #left_velocity = 0.0
 
-                print("Right Wheel Velocity = %s ft/s" % right_velocity)
-                print("Left Wheel Velocity = %s ft/s" % left_velocity)
+                #print("Right Wheel Velocity = %s ft/s" % right_velocity)
+                #print("Left Wheel Velocity = %s ft/s" % left_velocity)
 
             print(angleTracker)
             print("Done")
