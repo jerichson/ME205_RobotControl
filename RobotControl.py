@@ -365,7 +365,7 @@ def start():
             time.sleep(2)
             chassisStop()
             time.sleep(1)
-            for i in range(0, 440):
+            for i in range(0, 450):
                 robotSpin(1)
             chassisStop()
             time.sleep(1)
