@@ -21,12 +21,13 @@
 
 import threading
 import time
+
+# Delay start up to avoid "ghost" motion and allow gamepad connection
+time.sleep(30)
+
 from inputs import get_gamepad
 import RPi.GPIO as GPIO
 from subprocess import call
-
-# Delay start up to avoid "ghost" motion
-time.sleep(30)
 
 # Initialize all the gamepad variables
 gamepad_lock = threading.Lock()
@@ -204,8 +205,8 @@ def goHome(steps):
 
 def chassisForward():
     # to go forward
-    Lspeed = 11.4 + 1.5
-    Rspeed = 11.4 - 1.5
+    Lspeed = 11.42 + 1.5
+    Rspeed = 11.42 - 1.5
     Lmotor.ChangeDutyCycle(Lspeed)
     Rmotor.ChangeDutyCycle(Rspeed)
 
