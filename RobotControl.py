@@ -168,12 +168,12 @@ def yaw_actuation(joypos):
     if joypos > 10:
         GPIO.output(enable, on)
         GPIO.output(direc, CW)
-        delay = 0.00375 + 0.0075 * ((127.5 - joypos) / 127.5)
+        delay = 0.0037 + 0.0075 * ((127.5 - joypos) / 127.5)
         stepTracker = 1
     elif joypos < -10:
         GPIO.output(enable, on)
         GPIO.output(direc, CCW)
-        delay = 0.00375 + 0.0075 * ((127.5 + joypos) / 127.5)
+        delay = 0.0037 + 0.0075 * ((127.5 + joypos) / 127.5)
         stepTracker = -1
 
     GPIO.output(step, GPIO.HIGH)
@@ -366,7 +366,7 @@ def start():
             time.sleep(2)
             chassisStop()
             time.sleep(1)
-            for i in range(0, 445):
+            for i in range(0, 440):
                 robotSpin(1)
             chassisStop()
             time.sleep(1)
