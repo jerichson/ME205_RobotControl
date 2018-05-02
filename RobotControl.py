@@ -322,9 +322,6 @@ def start():
                     right_velocity = 0.0
                     left_velocity = 0.0
 
-                print("Right Wheel Velocity = %s ft/s" % right_velocity)
-                print("Left Wheel Velocity = %s ft/s" % left_velocity)
-
             print(angleTracker)
             print("Done")
 
