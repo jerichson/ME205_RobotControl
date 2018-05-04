@@ -249,7 +249,7 @@ def chassisMove(X, Y):
     linear = (Y / 127.5)
     angular = (X / 127.5)
 
-    maxSpeed = 4.0  # 0.1 to 7.1
+    maxSpeed = 1.5  # 0.1 to 7.1, calib at 1.5
     Lspeed = 11.45 + maxSpeed*linear + maxSpeed*angular
     Rspeed = 11.45 - maxSpeed*linear + maxSpeed*angular
     Lmotor.ChangeDutyCycle(Lspeed)
